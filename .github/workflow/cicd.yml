@@ -1,0 +1,24 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Test
+        run: echo "Testing ..."
+
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Build the Docker image
+#        run: docker build -t my_obraz .
+#
+#      - name: Deploy the Docker image
+#        run: docker run -d -p 172.17.0.2:80:80 my_obraz
+
