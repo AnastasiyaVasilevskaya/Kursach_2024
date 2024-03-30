@@ -20,6 +20,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Stop and remove previous container
+        run: |
+          docker ps -a | grep obraz:first | awk '{print $1}' | xargs -r docker stop
+          docker ps -a | grep obraz:first | awk '{print $1}' | xargs -r docker rm  
+
       - name: Build the Docker image
         run: docker build -t obraz:first .
 
