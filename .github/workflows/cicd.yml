@@ -22,16 +22,15 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
-
+      - name: Remove previous containers
+        run: |
+          Start-Process powershell -Verb RunAs -ArgumentList "docker rm -f $(docker ps -a -q)" || echo "No containers available for cleaning"
+      - name: Build the Docker image
+        run: docker build -t obraz:first .
   deploy:
     needs: build
     runs-on: self-hosted
 
     steps:
-      - name: Build the Docker image
-        run: docker build -t obraz:first .
-        shell: pwsh
-        runas: 'Administrator'
-
       - name: Deploy the Docker image
         run: docker run -d -p 80:80 obraz:first
