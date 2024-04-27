@@ -23,15 +23,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Stop and remove previous container
-        run:  |
-          $containers = docker ps -a -q
-          if ($containers) {
-            docker rm -f $containers
-          } else {
-            Write-Output "No containers available for cleaning"
-          }
+  deploy:
+    runs-on: self-hosted
 
+    steps:
       - name: Build the Docker image
         run: docker build -t obraz:first .
 
