@@ -14,6 +14,9 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Add safe directory exception
+        run: git config --global --add safe.directory D:/actions-runner/_work/Kursach_2024/Kursach_2024
+
       - name: Test
         run: echo "Testing ..."
 
