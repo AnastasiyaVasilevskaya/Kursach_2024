@@ -28,3 +28,7 @@ jobs:
 
       - name: Deploy the Docker image
         run: docker run -d -p 80:80 obraz:first
+<<<<<<< HEAD
+=======
+
+>>>>>>> e8338e3351b0ca81a436d0013e0769d4091e845f
