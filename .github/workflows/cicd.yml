@@ -28,17 +28,3 @@ jobs:
 
       - name: Deploy the Docker image
         run: docker run -d -p 80:80 obraz:first
-
-  merge_to_main:
-    runs-on: self-hosted
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.base.ref == 'develop' && github.event.pull_request.head.ref == 'main'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: 'develop'
-      - name: Merge branches
-        run: |
-          git merge --no-ff main
-          git push origin develop
