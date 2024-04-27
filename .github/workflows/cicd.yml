@@ -3,10 +3,10 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - develop
+      - main
   pull_request:
     branches:
-      - main
+      - develop
     types: [ closed ]
 
 jobs:
@@ -14,23 +14,31 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Add safe directory exception
-        run: git config --global --add safe.directory D:/actions-runner/_work/Kursach_2024/Kursach_2024
-
       - name: Test
         run: echo "Testing ..."
 
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Remove previous containers
-        run: |
-          Start-Process powershell -Verb RunAs -ArgumentList "docker rm -f $(docker ps -a -q)"
+
+      - name: Stop and remove previous container
+        run: docker rm -f $(docker ps -a -q)
+
       - name: Build the Docker image
         run: docker build -t obraz:first .
-  deploy:
-    needs: build
-    runs-on: self-hosted
 
-    steps:
       - name: Deploy the Docker image
         run: docker run -d -p 80:80 obraz:first
+
+  merge_to_main:
+    runs-on: self-hosted
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'develop'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: 'main'
+      - name: Merge branches
+        run: |
+          git merge --no-ff develop
+          git push origin main
