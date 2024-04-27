@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Build the Docker image
         run: docker build -t obraz:first .
+        shell: pwsh
+        runas: 'Administrator'
 
       - name: Deploy the Docker image
         run: docker run -d -p 80:80 obraz:first
