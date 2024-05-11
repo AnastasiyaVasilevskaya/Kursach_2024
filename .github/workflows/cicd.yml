@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Test
-        run: echo "Testing ..."
+        run: whoami
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # - name: Checkout repository
+      #   uses: actions/checkout@v4
 
       - name: Stop and remove previous container
         run: docker rm -f $(docker ps -a -q)
