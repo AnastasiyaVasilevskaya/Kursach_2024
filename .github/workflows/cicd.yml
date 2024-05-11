@@ -17,11 +17,11 @@ jobs:
       - name: Test
         run: echo "Testing ..."
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # - name: Checkout repository
+      #   uses: actions/checkout@v4
         
       - name: test user
-        uses: whoami
+        run: whoami
         
       - name: Stop and remove previous container
         run: docker rm -f $(docker ps -a -q)
