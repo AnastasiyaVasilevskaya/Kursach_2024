@@ -19,7 +19,10 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
-
+        
+      - name: test user
+        uses: whoami
+        
       - name: Stop and remove previous container
         run: docker rm -f $(docker ps -a -q)
 
